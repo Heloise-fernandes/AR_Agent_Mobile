@@ -151,7 +151,6 @@ public class Starter{
 	}
 	private static Iterable<Node> iterable(final Node racine, final String element){
 		return new Iterable<Node>() {
-			@Override
 			public Iterator<Node> iterator(){
 				return new Iterator<Node>() {
 					NodeList nodelist;
@@ -164,11 +163,8 @@ public class Starter{
 						}
 						length = nodelist.getLength();
 					}
-					@Override
 					public boolean hasNext(){return current<length;}
-					@Override
 					public Node next(){return nodelist.item(current++);}
-					@Override
 					public void remove(){}
 				};
 			}
