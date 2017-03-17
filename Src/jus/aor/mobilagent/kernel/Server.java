@@ -21,14 +21,19 @@ import jus.aor.mobilagent.kernel._Agent;
 public final class Server implements _Server {
 	/** le nom logique du serveur */
 	protected String name;
+	
 	/** le port où sera ataché le service du bus à agents mobiles. Pafr défaut on prendra le port 10140 */
 	protected int port=10140;
+	
 	/** le server d'agent démarré sur ce noeud */
 	protected AgentServer agentServer;
+	
 	/** le nom du logger */
 	protected String loggerName;
+	
 	/** le logger de ce serveur */
 	protected Logger logger=null;
+	
 	/**
 	 * Démarre un serveur de type mobilagent 
 	 * @param port le port d'écuote du serveur d'agent 
@@ -41,10 +46,14 @@ public final class Server implements _Server {
 			/* mise en place du logger pour tracer l'application */
 			loggerName = "jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+this.name;
 			logger=Logger.getLogger(loggerName);
+			
 			/* démarrage du server d'agents mobiles attaché à cette machine */
-			//A COMPLETER
+			this.agentServer = new AgentServer(port, name);
+			this.agentServer.start();
+			
 			/* temporisation de mise en place du server d'agents */
 			Thread.sleep(1000);
+			
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
@@ -60,6 +69,7 @@ public final class Server implements _Server {
 	public final void addService(String name, String classeName, String codeBase, Object... args) {
 		try {
 			//A COMPLETER
+			
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
@@ -76,6 +86,7 @@ public final class Server implements _Server {
 	public final void deployAgent(String classeName, Object[] args, String codeBase, List<String> etapeAddress, List<String> etapeAction) {
 		try {
 			//A COMPLETER en terme de startAgent
+			
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;

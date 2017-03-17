@@ -3,10 +3,12 @@ package jus.aor.mobilagent.kernel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 /**
@@ -19,6 +21,7 @@ public class AgentServer extends Thread{
 	private int port;
 	private String name;
 	private boolean isalive;
+	
 	public AgentServer(int port, String name ){
 		this.port = port;
 		this.name = name;
@@ -101,7 +104,9 @@ public class AgentServer extends Thread{
 	public URI site()
 	{
 		URI u = null;
-		try {u = new URI(this.name);} catch (URISyntaxException e) {e.printStackTrace();}
+		try {u = new URI("MobileAgent://"+InetAddress.getLocalHost().getHostName()+":"+this.port);} 
+		catch (URISyntaxException e) {e.printStackTrace();} 
+		catch (UnknownHostException e) {e.printStackTrace();}
 		return u;
 	}
 }
