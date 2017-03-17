@@ -5,10 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.jar.JarException;
 
-/**
- * @author cheva
- *
- */
+
 public class BAMAgentClassLoader extends ClassLoader {
 
 	Jar code;
