@@ -16,6 +16,9 @@ public class AgentServer extends Thread{
 		this.name = name;
 	}
 	
+	
+	
+	
 	public void run(){
 		while(true){
 			//#TODO accept faire des socket comme le TP socket
