@@ -3,8 +3,11 @@
  */
 package jus.aor.mobilagent.kernel;
 
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
@@ -68,7 +71,17 @@ public final class Server implements _Server {
 	 */
 	public final void addService(String name, String classeName, String codeBase, Object... args) {
 		try {
-			//A COMPLETER
+			
+			BAMServerClassLoader sLoader = new BAMServerClassLoader( new URL[] {}, this.getClass().getClassLoader());
+			sLoader.addURL(new URL(codeBase));
+			
+			Class<?> sclasse = Class.forName(classeName,true,sLoader);
+			
+			Constructor<?> sConstructeur = sclasse.getConstructor(Object[].class);
+			
+			_Service<?> service = (_Service<?>) sConstructeur.newInstance(new Object[] {args});
+			
+			this.agentServer.addService(name, service);
 			
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
@@ -85,6 +98,35 @@ public final class Server implements _Server {
 	 */
 	public final void deployAgent(String classeName, Object[] args, String codeBase, List<String> etapeAddress, List<String> etapeAction) {
 		try {
+			
+			//Etape 1 : charger la classe de l'agent
+			BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(new URI(codeBase).getPath() ,this.getClass().getClassLoader());
+			
+			Class<?> aClass = Class.forName(classeName,true,agentLoader);
+			
+			
+			//Etape 2 : Créer une instance l'agent
+			Constructor<?> aConstructeur = aClass.getConstructor(Object[].class);
+			
+			_Agent agent = (_Agent) aConstructeur.newInstance(new Object[] {args});
+			agent.init(this.agentServer, this.name);
+			
+			//Remplir la feuille de route
+			if(etapeAction.size()!=etapeAddress.size()){throw new Exception();}
+			
+			int len = etapeAction.size();
+
+			for(int i =0; i < len ; i++)
+			{
+				//On recupère le champs
+				Field atribut = aClass.getField(etapeAction.get(i));
+				atribut.setAccessible(true);
+				
+				//ajoute une étape
+				agent.addEtape(new Etape(new URI(etapeAddress.get(i)), (_Action) atribut.get(agent)));
+			}
+			
+			this.startAgent(agent, agentLoader);
 			//A COMPLETER en terme de startAgent
 			
 		}catch(Exception ex){
@@ -100,6 +142,18 @@ public final class Server implements _Server {
 	 * @throws Exception
 	 */
 	protected void startAgent(_Agent agent, BAMAgentClassLoader loader) throws Exception {
-		//A COMPLETER
+		
+		//ON créer un socket à partir de l'agent serveur
+		Socket socket = new Socket(this.agentServer.site().getHost(), this.agentServer.site().getPort());
+		
+		ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+		
+		Jar jar = loader.extractCode();
+		
+		out.writeObject(jar);
+		out.writeObject(agent);
+		
+		out.close();
+		socket.close();
 	}
 }
