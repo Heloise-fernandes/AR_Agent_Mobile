@@ -28,7 +28,7 @@ public class AgentServer extends Thread{
 	}
 	
 	public void run(){
-		//#TODO accept faire des socket comme le TP socket
+		//accept faire des socket comme le TP socket
 		this.isalive = true;
 		try 
 		{
@@ -37,9 +37,12 @@ public class AgentServer extends Thread{
 			while(this.isalive)
 			{
 				Socket client = serverTCPSoc.accept();
-				//TODO Ecouter
-				this.getAgent(client);
-			}	
+				//Ecouter
+				_Agent a = this.getAgent(client);
+				//lancer l'agent 
+				new Thread(a).start();
+			}
+			serverTCPSoc.close();
 			
 		} catch (IOException e) {e.printStackTrace();}
 	}
