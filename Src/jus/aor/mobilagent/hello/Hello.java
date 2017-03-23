@@ -5,10 +5,12 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 
 import jus.aor.mobilagent.kernel.Agent;
 import jus.aor.mobilagent.kernel.AgentServer;
 import jus.aor.mobilagent.kernel.Etape;
+import jus.aor.mobilagent.kernel.Starter;
 import jus.aor.mobilagent.kernel._Action;
 import jus.aor.mobilagent.kernel._Agent;
 
@@ -32,15 +34,25 @@ public class Hello extends Agent{
 
 		@Override
 		public void execute() {
-			System.out.println(as.site());	
+			System.out.println(as.site()+":  Executing action Hello");
 		}
+		
+		public String toString(){return "Hello";}
 	};
 	/* (non-Javadoc)
 	 * @see jus.aor.mobilagent.kernel.Agent#retour()
 	 */
 	@Override
 	protected _Action retour(){
-		 return this.doIt;
+		return new _Action(){
+
+			@Override
+			public void execute() {
+				System.out.println(as.site()+":  Executing action Hello");
+			}
+			
+			public String toString(){return "Action de retour";}
+		};
 	}
 	
 }
