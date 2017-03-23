@@ -8,7 +8,7 @@ import java.net.URI;
 
 public abstract class Agent implements _Agent {
 	
-	private AgentServer as;
+	protected AgentServer as;
 	private Route route;
 	private String serverName;
 
