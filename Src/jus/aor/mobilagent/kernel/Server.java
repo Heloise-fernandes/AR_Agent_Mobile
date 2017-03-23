@@ -126,14 +126,15 @@ public final class Server implements _Server {
 				agent.addEtape(new Etape(new URI(etapeAddress.get(i)), (_Action) atribut.get(agent)));
 			}
 			
+			//En terme de startAgent
 			this.startAgent(agent, agentLoader);
-			//A COMPLETER en terme de startAgent
-			
+					
 		}catch(Exception ex){
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
 		}
 	}
+	
 	/**
 	 * Primitive permettant de "mover" un agent sur ce serveur en vue de son exécution
 	 * immédiate.
