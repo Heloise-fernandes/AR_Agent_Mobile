@@ -6,14 +6,16 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import jus.aor.mobilagent.kernel.AgentServer;
+import jus.aor.mobilagent.kernel.Etape;
 import jus.aor.mobilagent.kernel._Action;
-import jus.aor.mobilagent.kernel.Agent;
+import jus.aor.mobilagent.kernel._Agent;
 
 /**
  * Classe de test élémentaire pour le bus à agents mobiles
  * @author  Morat
  */
-public class Hello extends Agent{
+public class Hello implements _Agent{
 
 	 /**
 	  * construction d'un agent de type hello.
@@ -26,6 +28,12 @@ public class Hello extends Agent{
 	 * l'action à entreprendre sur les serveurs visités  
 	 */
 	protected _Action doIt = new _Action(){
+
+		@Override
+		public void execute() {
+			// TODO Auto-generated method stub
+			
+		}
 		// ...
 	};
 	/* (non-Javadoc)
@@ -33,7 +41,27 @@ public class Hello extends Agent{
 	 */
 	@Override
 	protected _Action retour(){
-		// return ...;
+		 return null;
 	}
 	// ...
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void init(AgentServer agentServer, String serverName) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void reInit(AgentServer server, String serverName) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void addEtape(Etape etape) {
+		// TODO Auto-generated method stub
+		
+	}
 }
