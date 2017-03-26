@@ -58,6 +58,7 @@ public final class Server implements _Server {
 			Thread.sleep(1000);
 			
 		}catch(Exception ex){
+			System.out.println("erreur durant le lancement du serveur"+this);
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
 		}
@@ -84,6 +85,7 @@ public final class Server implements _Server {
 			this.agentServer.addService(name, service);
 			
 		}catch(Exception ex){
+			System.out.println(" erreur durant le lancement du serveur"+this);
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
 		}
@@ -130,6 +132,7 @@ public final class Server implements _Server {
 			this.startAgent(agent, agentLoader);
 					
 		}catch(Exception ex){
+			System.out.println(" erreur durant le lancement du serveur"+this);
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
 			return;
 		}

@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RMISecurityManager;
+import java.security.AccessControlException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,11 +48,14 @@ public class Starter{
 		// récupération du niveau de log
 		java.util.logging.Level level;
 		try {
-			level = Level.parse(System.getProperty("LEVEL"));			
+			level = Level.parse(System.getProperty("LEVEL"));
 		}catch(NullPointerException e) {
 			level=java.util.logging.Level.OFF;
 		}catch(IllegalArgumentException e) {
 			level=java.util.logging.Level.SEVERE;
+		}catch(AccessControlException e){
+			System.out.println(e.getPermission());
+			throw e;
 		}
 		try {
 			/* Mise en place du logger pour tracer l'application */
@@ -77,9 +81,11 @@ public class Starter{
 	}
 	@SuppressWarnings("unchecked")
 	protected void createServer(int port, String name) throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		loader = new BAMServerClassLoader(new URL[]{new URL("file:///.../MobilagentServer.jar")},this.getClass().getClassLoader());
+		loader = new BAMServerClassLoader(new URL[]{new URL("file://JarFiles/MobilagentServer.jar")},this.getClass().getClassLoader());
 		classe = (Class<jus.aor.mobilagent.kernel.Server>)Class.forName("jus.aor.mobilagent.kernel.Server",true,loader);
 		server = classe.getConstructor(int.class,String.class).newInstance(port,name);
+		logger.log(Level.FINE, String.format("Création du server %s : SUCCES", this.server));
+		System.out.println(String.format("Création du server %s : SUCCES", this.server));
 	}
 	/**
 	 * Ajoute les services définis dans le fichier de configuration
@@ -96,6 +102,7 @@ public class Starter{
 			name = attrs.getNamedItem("name").getNodeValue();
 			addService(name, classeName, codeBase, args);
 		}
+		System.out.println(String.format("Ajout des services du server %s : SUCCES", this.server));
 	}
 	/**
 	 * Ajoute un service
@@ -108,6 +115,7 @@ public class Starter{
 		try{
 			server.addService(name,classeName,codeBase,args);
 		}catch(Exception e){
+			System.out.println(String.format("ajout du service %s dans le serveur %s : ERR", name, this.server));
 			logger.log(Level.FINE," erreur durant l'ajout d'un service",e);
 		}
 	}
@@ -133,6 +141,7 @@ public class Starter{
 			}
 			deployAgent(classeName, args, codeBase,serverAddress, serverAction);
 		}
+		System.out.println("Deploiement de tous les agents : SUCC");
 	}
 	/**
 	 * Déploie un agent
@@ -146,6 +155,7 @@ public class Starter{
 		try{
 			server.deployAgent(classeName,args,codeBase,serverAddress,serverAction);
 		}catch(Exception e){
+			System.out.println("Deploiement de l'agent : ERR");
 			logger.log(Level.FINE," erreur durant le déploiement de l'agent",e);
 		}
 	}
