@@ -14,6 +14,7 @@ public abstract class Agent implements _Agent {
 
 	@Override
 	public void run() {
+		System.out.println("Agent run");
 		if(route.hasNext()){
 			Etape e = route.next();
 			e.action.execute();
@@ -25,6 +26,7 @@ public abstract class Agent implements _Agent {
 
 	@Override
 	public void init(AgentServer agentServer, String serverName) {
+		System.out.println("Agent init");
 		as = agentServer;
 		this.serverName = serverName;
 		

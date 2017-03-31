@@ -154,6 +154,7 @@ public class Starter{
 	protected void deployAgent(String classeName, Object[] args, String codeBase, List<String> serverAddress, List<String> serverAction) {
 		try{
 			server.deployAgent(classeName,args,codeBase,serverAddress,serverAction);
+			
 		}catch(Exception e){
 			System.out.println("Deploiement de l'agent : ERR");
 			logger.log(Level.FINE," erreur durant le déploiement de l'agent",e);

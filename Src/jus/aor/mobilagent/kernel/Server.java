@@ -100,7 +100,7 @@ public final class Server implements _Server {
 	 */
 	public final void deployAgent(String classeName, Object[] args, String codeBase, List<String> etapeAddress, List<String> etapeAction) {
 		try {
-			
+			System.out.println("Tentative de deploiement de "+classeName);
 			//Etape 1 : charger la classe de l'agent
 			BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(new URI(codeBase).getPath() ,this.getClass().getClassLoader());
 			
