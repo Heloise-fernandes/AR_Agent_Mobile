@@ -12,7 +12,6 @@ public abstract class Agent implements _Agent {
 	private Route route;
 	private String serverName;
 
-	@Override
 	public void run() {
 		if(route.hasNext()){
 			Etape e = route.next();
@@ -23,7 +22,6 @@ public abstract class Agent implements _Agent {
 		}
 	}
 
-	@Override
 	public void init(AgentServer agentServer, String serverName) {
 		as = agentServer;
 		this.serverName = serverName;
@@ -35,14 +33,12 @@ public abstract class Agent implements _Agent {
 		this.route.add(new Etape(agentServer.site(), _Action.NIHIL));
 	}
 
-	@Override
 	public void reInit(AgentServer server, String serverName) {
 		as = server;
 		this.serverName = serverName;
 
 	}
 
-	@Override
 	public void addEtape(Etape etape) {
 		route.add(etape);
 	}
