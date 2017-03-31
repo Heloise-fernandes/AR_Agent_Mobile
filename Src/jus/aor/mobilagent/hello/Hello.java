@@ -18,7 +18,7 @@ import jus.aor.mobilagent.kernel._Agent;
  * Classe de test élémentaire pour le bus à agents mobiles
  * @author  Morat
  */
-public class Hello extends Agent{
+public class Hello extends Agent {
 
 	 /**
 	  * construction d'un agent de type hello.
@@ -32,7 +32,6 @@ public class Hello extends Agent{
 	 */
 	protected _Action doIt = new _Action(){
 
-		@Override
 		public void execute() {
 			System.out.println(as.site()+":  Executing action Hello");
 		}
@@ -42,7 +41,6 @@ public class Hello extends Agent{
 	/* (non-Javadoc)
 	 * @see jus.aor.mobilagent.kernel.Agent#retour()
 	 */
-	@Override
 	protected _Action retour(){
 		return new _Action(){
 
@@ -53,7 +51,7 @@ public class Hello extends Agent{
 
 			@Override
 			public void execute() {
-				System.out.println(as.site()+":  Executing action Hello");
+				System.out.println(as.site() + ":  Executing action Hello");
 			}
 			
 			public String toString(){return "Action de retour";}
