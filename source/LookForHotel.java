@@ -25,6 +25,7 @@ public class LookForHotel{
 	 */
 	public long call() {
 		// ...
+		return (Long) null;
 	}
 
 	// ...
