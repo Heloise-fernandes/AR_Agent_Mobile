@@ -8,9 +8,9 @@ import java.net.URI;
 
 public abstract class Agent implements _Agent {
 	
-	protected AgentServer as;
+	transient protected AgentServer as;
 	private Route route;
-	private String serverName;
+	transient private String serverName;
 
 	public void run() {
 		System.out.println("Agent run");

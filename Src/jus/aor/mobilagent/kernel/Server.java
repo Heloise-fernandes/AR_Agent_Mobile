@@ -121,7 +121,7 @@ public final class Server implements _Server {
 			for(int i =0; i < len ; i++)
 			{
 				//On recupère le champs
-				Field atribut = aClass.getField(etapeAction.get(i));
+				Field atribut = aClass.getDeclaredField(etapeAction.get(i));
 				atribut.setAccessible(true);
 				
 				//ajoute une étape
