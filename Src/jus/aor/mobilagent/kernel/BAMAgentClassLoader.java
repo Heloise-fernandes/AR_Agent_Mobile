@@ -30,7 +30,7 @@ public class BAMAgentClassLoader extends ClassLoader {
 		// On define les classe une par une (On est sur que toutes seront utilisées)
 		for(Iterator<Map.Entry<String,byte[]>> iter = code.iterator(); iter.hasNext();) {
 			Map.Entry<String, byte[]> currentClass = iter.next();
-			this.defineClass(currentClass.getKey(), currentClass.getValue(), 0, currentClass.getValue().length);
+			this.defineClass(className(currentClass.getKey()), currentClass.getValue(), 0, currentClass.getValue().length);
 		}
 	}
 	

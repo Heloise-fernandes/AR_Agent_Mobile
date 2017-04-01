@@ -100,7 +100,7 @@ public final class Server implements _Server {
 	 */
 	public final void deployAgent(String classeName, Object[] args, String codeBase, List<String> etapeAddress, List<String> etapeAction) {
 		try {
-			
+			System.out.println("Tentative de deploiement de "+classeName);
 			//Etape 1 : charger la classe de l'agent
 			BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(new URI(codeBase).getPath() ,this.getClass().getClassLoader());
 			
@@ -121,7 +121,7 @@ public final class Server implements _Server {
 			for(int i =0; i < len ; i++)
 			{
 				//On recupère le champs
-				Field atribut = aClass.getField(etapeAction.get(i));
+				Field atribut = aClass.getDeclaredField(etapeAction.get(i));
 				atribut.setAccessible(true);
 				
 				//ajoute une étape

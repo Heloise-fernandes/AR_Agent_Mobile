@@ -52,16 +52,17 @@ public class AgentServer extends Thread{
 		//Lire le jar
 		try 
 		{
-			ObjectInputStream lecteurJar = new ObjectInputStream(client.getInputStream());
-			Object o = lecteurJar.readObject();
+			BAMAgentClassLoader bamLoader = new BAMAgentClassLoader(this.getContextClassLoader());
+			AgentInputStream input = new AgentInputStream(client.getInputStream(), bamLoader);
+			
+			//AgentInputStream lecteurJar = new Agen(client.getInputStream());
+			Object o = input.readObject();
 			if(o instanceof Jar)
 			{
 				Jar jarjar = (Jar) o;
-				
-				BAMAgentClassLoader bamLoader = new BAMAgentClassLoader(this.getContextClassLoader());
 				bamLoader.integrateCode(jarjar);
-				AgentInputStream input = new AgentInputStream(client.getInputStream(), bamLoader);
 				Object possibleAgent = input.readObject();
+				
 				if(possibleAgent instanceof _Agent)
 				{
 					_Agent agent = (_Agent) possibleAgent;

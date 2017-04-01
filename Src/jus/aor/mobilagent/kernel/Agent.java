@@ -8,11 +8,12 @@ import java.net.URI;
 
 public abstract class Agent implements _Agent {
 	
-	protected AgentServer as;
+	transient protected AgentServer as;
 	private Route route;
-	private String serverName;
+	transient private String serverName;
 
 	public void run() {
+		System.out.println("Agent run");
 		if(route.hasNext()){
 			Etape e = route.next();
 			e.action.execute();
@@ -23,6 +24,7 @@ public abstract class Agent implements _Agent {
 	}
 
 	public void init(AgentServer agentServer, String serverName) {
+		System.out.println("Agent init");
 		as = agentServer;
 		this.serverName = serverName;
 		
