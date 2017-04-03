@@ -54,7 +54,6 @@ public class Hello extends Agent {
 			 */
 			private static final long serialVersionUID = 1L;
 
-			@Override
 			public void execute() {
 				
 				System.out.println(as.site() + ":  Executing action HelloRetour");
