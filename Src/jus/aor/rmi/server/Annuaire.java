@@ -26,7 +26,7 @@ public class Annuaire implements _Annuaire{
 		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
 		    final DocumentBuilder builder = factory.newDocumentBuilder();       
-		    final Document document= builder.parse(new File("repertoire.xml"));
+		    final Document document= builder.parse(new File( fichier ));
 			
 		    final Element racine = document.getDocumentElement(); // on se met a la racine "root"
 			final NodeList racineNoeuds = racine.getChildNodes(); //on se met sur un enfant "Téléphone"
@@ -50,12 +50,6 @@ public class Annuaire implements _Annuaire{
 		catch (final IOException e) {
 		    e.printStackTrace();
 		}
-		
-
-
-		
-
-
 		
 		
 	}
