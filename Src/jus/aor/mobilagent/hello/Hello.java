@@ -32,6 +32,11 @@ public class Hello extends Agent {
 	 */
 	protected _Action doIt = new _Action(){
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public void execute() {
 			System.out.println(as.site()+":  Executing action Hello");
 		}
@@ -51,7 +56,8 @@ public class Hello extends Agent {
 
 			@Override
 			public void execute() {
-				System.out.println(as.site() + ":  Executing action Hello");
+				
+				System.out.println(as.site() + ":  Executing action HelloRetour");
 			}
 			
 			public String toString(){return "Action de retour";}

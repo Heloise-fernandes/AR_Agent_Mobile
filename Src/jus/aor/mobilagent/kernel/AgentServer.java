@@ -66,6 +66,7 @@ public class AgentServer extends Thread{
 				if(possibleAgent instanceof _Agent)
 				{
 					_Agent agent = (_Agent) possibleAgent;
+					agent.reInit(this, name);
 					return agent;
 				}
 				else

@@ -141,7 +141,7 @@ public class Starter{
 			}
 			deployAgent(classeName, args, codeBase,serverAddress, serverAction);
 		}
-		System.out.println("Deploiement de tous les agents : SUCC");
+		//System.out.println("Deploiement de tous les agents : SUCC");
 	}
 	/**
 	 * Déploie un agent

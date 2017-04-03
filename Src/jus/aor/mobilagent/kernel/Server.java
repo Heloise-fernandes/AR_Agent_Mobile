@@ -50,10 +50,12 @@ public final class Server implements _Server {
 			loggerName = "jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+this.name;
 			logger=Logger.getLogger(loggerName);
 			
+			logger.log(Level.FINE, "Construction du serveur : " + this.name);
 			/* démarrage du server d'agents mobiles attaché à cette machine */
 			this.agentServer = new AgentServer(port, name);
+			logger.log(Level.FINE, "Construction de l'agent Server : " + this.name);
 			this.agentServer.start();
-			
+			logger.log(Level.FINE, "Démarage de l'agent server : " + this.name);
 			/* temporisation de mise en place du server d'agents */
 			Thread.sleep(1000);
 			
@@ -83,7 +85,7 @@ public final class Server implements _Server {
 			_Service<?> service = (_Service<?>) sConstructeur.newInstance(new Object[] {args});
 			
 			this.agentServer.addService(name, service);
-			
+			logger.log(Level.FINE, "Ajout du service : " +name+" sur le serveur "+ this.name);
 		}catch(Exception ex){
 			System.out.println(" erreur durant le lancement du serveur"+this);
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
@@ -101,6 +103,7 @@ public final class Server implements _Server {
 	public final void deployAgent(String classeName, Object[] args, String codeBase, List<String> etapeAddress, List<String> etapeAction) {
 		try {
 			System.out.println("Tentative de deploiement de "+classeName);
+			logger.log(Level.FINE,"Déploiement d'agent sur "+this);
 			//Etape 1 : charger la classe de l'agent
 			BAMAgentClassLoader agentLoader = new BAMAgentClassLoader(new URI(codeBase).getPath() ,this.getClass().getClassLoader());
 			
@@ -156,7 +159,7 @@ public final class Server implements _Server {
 		
 		out.writeObject(jar);
 		out.writeObject(agent);
-		
+		logger.log(Level.FINE,"Réception de l'agent");
 		out.close();
 		socket.close();
 	}

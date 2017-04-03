@@ -3,14 +3,19 @@ package jus.aor.mobilagent.kernel;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URI;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Agent implements _Agent {
 	
 	transient protected AgentServer as;
 	private Route route;
 	transient private String serverName;
+	transient private Logger logger;
 
 	public void run() {
 		System.out.println("Agent run");
@@ -20,11 +25,24 @@ public abstract class Agent implements _Agent {
 			if(route.hasNext()){
 				this.move();
 			}
+			else{
+				this.move(route.retour.server);
+			}
+		}
+		else{
+			this.retour();
 		}
 	}
 
 	public void init(AgentServer agentServer, String serverName) {
 		System.out.println("Agent init");
+		try {
+			logger = Logger.getLogger("jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+serverName);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.log(Level.FINE, "Construction de l'agent");
 		as = agentServer;
 		this.serverName = serverName;
 		
@@ -38,6 +56,13 @@ public abstract class Agent implements _Agent {
 	public void reInit(AgentServer server, String serverName) {
 		as = server;
 		this.serverName = serverName;
+		try {
+			logger = Logger.getLogger("jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+serverName);
+			logger.log(Level.FINE, "Reconstruction de l'agent");
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -69,7 +94,7 @@ public abstract class Agent implements _Agent {
 			Jar jar = bacl.extractCode();
 			os.writeObject(jar);
 			os.writeObject(this);
-			
+			logger.log(Level.FINE, "Move de l'agent de "+serverName+" vers "+adresseProchainServeur);
 			os.close();
 			s.close();
 			
