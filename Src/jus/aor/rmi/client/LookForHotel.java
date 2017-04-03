@@ -53,6 +53,7 @@ public class LookForHotel{
 	 * @throws RemoteException
 	 * @throws NotBoundException 
 	 */
+	
 	public long call() throws RemoteException, NotBoundException {
 		long tps = System.currentTimeMillis();
 		
