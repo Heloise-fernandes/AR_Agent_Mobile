@@ -30,7 +30,7 @@ public abstract class Agent implements _Agent {
 			}
 		}
 		else{
-			this.retour();
+			this.route.retour.action.execute();
 		}
 	}
 
@@ -47,7 +47,7 @@ public abstract class Agent implements _Agent {
 		this.serverName = serverName;
 		
 		//Action au retour
-		this.route = new Route(new Etape(agentServer.site(), _Action.NIHIL));
+		this.route = new Route(new Etape(agentServer.site(), this.retour()));
 
 		//Action de départ
 		this.route.add(new Etape(agentServer.site(), _Action.NIHIL));
