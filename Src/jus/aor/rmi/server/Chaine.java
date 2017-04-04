@@ -62,13 +62,13 @@ public class Chaine extends UnicastRemoteObject implements _Chaine {
 	public List<Hotel> get(String localisation) {
 		List<Hotel> finish = new ArrayList<Hotel>();
 		
+		System.out.println("Recuperation hotels");
+		
 		for (Hotel hotel : this.ListH) {
 			if (localisation.equals(hotel.localisation)) {
 				finish.add(hotel);
 			}		
 		}
-
-		
 		return finish;
 	}
 
