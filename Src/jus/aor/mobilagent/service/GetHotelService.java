@@ -1,4 +1,4 @@
-package jus.aor.mobilagent.kernel;
+package jus.aor.mobilagent.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,18 +18,20 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import jus.aor.mobilagent.hostel.Hotel;
+import jus.aor.mobilagent.kernel._Chaine;
+import jus.aor.mobilagent.kernel._Service;
 
 public class GetHotelService implements _Service<List<Hotel>>, _Chaine{
 
 	private ArrayList<Hotel> listeHotel;
 	
-	public GetHotelService(String path) {
+	public GetHotelService(Object... args) {
 		Document doc = null;
 		DocumentBuilder docBuilder;
 		try 
 		{
 			docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			doc = docBuilder.parse(new File(path));
+			doc = docBuilder.parse(new File((String) args[0]));
 		} catch (ParserConfigurationException | SAXException | IOException e) {e.printStackTrace();}
 		
 		this.listeHotel = new ArrayList<>();
@@ -37,7 +39,6 @@ public class GetHotelService implements _Service<List<Hotel>>, _Chaine{
 		if(doc!=null)
 		{
 			NamedNodeMap attrs;
-			Object[] args;
 			String localisation, name;
 			for(Node item : iterable(doc,"Hotel")) {
 				attrs = item.getAttributes();
