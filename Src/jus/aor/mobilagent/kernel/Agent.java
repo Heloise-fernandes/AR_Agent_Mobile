@@ -1,5 +1,6 @@
 package jus.aor.mobilagent.kernel;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -16,6 +17,8 @@ public abstract class Agent implements _Agent {
 	private Route route;
 	transient private String serverName;
 	transient protected Logger logger;
+	private int tailleAgent = 0;
+	private int tailleJar = 0;
 
 	public void run() {
 		System.out.println("Agent run");
@@ -59,6 +62,9 @@ public abstract class Agent implements _Agent {
 		try {
 			logger = Logger.getLogger("jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+serverName);
 			logger.log(Level.FINE, "Reconstruction de l'agent "+ this);
+			logger.log(Level.FINE, "Nb octet transmit d'agent "+ tailleAgent);
+			logger.log(Level.FINE, "Nb octet transmit de JAR "+ tailleJar);
+			logger.log(Level.FINE, "Nb octet transmit TOTAL "+ (tailleJar+tailleAgent));
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,7 +98,10 @@ public abstract class Agent implements _Agent {
 			
 			BAMAgentClassLoader bacl = (BAMAgentClassLoader) this.getClass().getClassLoader();
 			Jar jar = bacl.extractCode();
+			
+			this.tailleJar += getTaille(jar);
 			os.writeObject(jar);
+			this.tailleAgent += getTaille(this);
 			os.writeObject(this);
 			logger.log(Level.FINE, "Move de l'agent de "+this+" vers "+adresseProchainServeur);
 			os.close();
@@ -106,6 +115,25 @@ public abstract class Agent implements _Agent {
 	
 	protected String route(){
 		return route.toString();
+	}
+	
+	//Permet de savoir la taille des objets qu'on envoie.
+	//C'est absolument immonde comme code
+	//src : http://stackoverflow.com/questions/52353/in-java-what-is-the-best-way-to-determine-the-size-of-an-object
+	private int  getTaille(Object o){
+		 ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		 ObjectOutputStream oos;
+		try {
+			oos = new ObjectOutputStream(baos);
+			oos.writeObject(o);
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 return baos.size();
+		
 	}
 	
 	
