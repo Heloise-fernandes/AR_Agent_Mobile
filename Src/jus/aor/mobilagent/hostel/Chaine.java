@@ -56,7 +56,7 @@ public class Chaine implements _Service<List<Hotel>>, _Chaine{
 		
 		ArrayList<Hotel> hotelCherche = new ArrayList<>();
 		for (Hotel hotel : this.listeHotel) {
-		    if(hotel.equals(localisation))
+		    if(hotel.localisation.equals(localisation))
 		    {
 		    	hotelCherche.add(hotel);
 		    }
@@ -69,7 +69,7 @@ public class Chaine implements _Service<List<Hotel>>, _Chaine{
 		
 		ArrayList<Hotel> hotelCherche = new ArrayList<>();
 		
-		hotelCherche = (ArrayList) get((String) params[0]);
+		hotelCherche = (ArrayList<Hotel>) get((String) params[0]);
 		
 		return hotelCherche;
 	}

@@ -2,6 +2,7 @@ package jus.aor.mobilagent.lookforhostel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -20,7 +21,7 @@ public class LookForHotel extends Agent {
 	private static final long serialVersionUID = 1L;
 	//private Collection<Hotel> hotels = new LinkedList<Hotel>();
 	private ArrayList<Hotel> hotels;
-	private TreeMap<Hotel,Numero> numeros;
+	private HashMap<Hotel,Numero> numeros;
 	private String localisation;
 	 /**
 	  * construction d'un agent de type hello.
@@ -29,7 +30,7 @@ public class LookForHotel extends Agent {
 	 public LookForHotel(Object... args) {
 		super();
 		hotels = new ArrayList<Hotel>();
-		numeros = new TreeMap<>();
+		numeros = new HashMap<>();
 		localisation = (String) args[0];
 	 }
 	 
@@ -64,10 +65,14 @@ public class LookForHotel extends Agent {
 		private static final long serialVersionUID = 1L;
 
 		public void execute() {
-			_Service<?> service = as.getService("Annuaire");
-			
+			_Service<?> service = as.getService("Telephones");
+			//System.out.println("Numeros est null :"+(numeros==null)+" - hotel taille :"+hotels.size());
 			for(Hotel hotel : hotels) {
-				numeros.put(hotel,(Numero) service.call(hotel));
+				
+				//System.out.println("Je cherche :"+hotel.name);
+				Numero num = (Numero) service.call(hotel.name);
+				
+				numeros.put(hotel,num);
 			}
 			
 			logger.log(Level.FINE,this+" récupération des numéros " + localisation+" sur le serveur "+as);

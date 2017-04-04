@@ -42,7 +42,7 @@ public class Annuaire implements _Service<Numero>, _Annuaire {
 			for (int i = 0; i<elements.getLength(); i++) { // on boucle sur tous les noeuds et on remplis la hashmap
 				Node item = elements.item(i);
 				String name = item.getAttributes().getNamedItem("name").getNodeName();
-				Numero num = new Numero(item.getAttributes().getNamedItem("name").getNodeName());
+				Numero num = new Numero(item.getAttributes().getNamedItem("numero").getNodeName());
 				this.annuaire.put(name, num);
 	
 			}
@@ -51,6 +51,7 @@ public class Annuaire implements _Service<Numero>, _Annuaire {
 
 	@Override
 	public Numero get(String abonne) {
+		System.out.println("Hotel :"+abonne);
 		return this.annuaire.get(abonne);
 	}
 
