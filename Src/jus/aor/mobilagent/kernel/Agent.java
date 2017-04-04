@@ -15,7 +15,7 @@ public abstract class Agent implements _Agent {
 	transient protected AgentServer as;
 	private Route route;
 	transient private String serverName;
-	transient private Logger logger;
+	transient protected Logger logger;
 
 	public void run() {
 		System.out.println("Agent run");
@@ -42,7 +42,7 @@ public abstract class Agent implements _Agent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		logger.log(Level.FINE, "Construction de l'agent");
+		logger.log(Level.FINE, "Construction de l'agent "+this);
 		as = agentServer;
 		this.serverName = serverName;
 		
@@ -58,7 +58,7 @@ public abstract class Agent implements _Agent {
 		this.serverName = serverName;
 		try {
 			logger = Logger.getLogger("jus/aor/mobilagent/"+InetAddress.getLocalHost().getHostName()+"/"+serverName);
-			logger.log(Level.FINE, "Reconstruction de l'agent");
+			logger.log(Level.FINE, "Reconstruction de l'agent "+ this);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,7 +94,7 @@ public abstract class Agent implements _Agent {
 			Jar jar = bacl.extractCode();
 			os.writeObject(jar);
 			os.writeObject(this);
-			logger.log(Level.FINE, "Move de l'agent de "+serverName+" vers "+adresseProchainServeur);
+			logger.log(Level.FINE, "Move de l'agent de "+this+" vers "+adresseProchainServeur);
 			os.close();
 			s.close();
 			

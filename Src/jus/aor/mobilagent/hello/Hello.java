@@ -1,18 +1,10 @@
 package jus.aor.mobilagent.hello;
 
-import java.net.URI;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+
 import java.util.logging.Level;
 
 import jus.aor.mobilagent.kernel.Agent;
-import jus.aor.mobilagent.kernel.AgentServer;
-import jus.aor.mobilagent.kernel.Etape;
-import jus.aor.mobilagent.kernel.Starter;
 import jus.aor.mobilagent.kernel._Action;
-import jus.aor.mobilagent.kernel._Agent;
 
 /**
  * Classe de test élémentaire pour le bus à agents mobiles
@@ -21,11 +13,17 @@ import jus.aor.mobilagent.kernel._Agent;
 public class Hello extends Agent {
 
 	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String listeServeur;
+	 /**
 	  * construction d'un agent de type hello.
 	  * @param args aucun argument n'est requis
 	  */
 	 public Hello(Object... args) {
 		super();
+		listeServeur="";
 	 }
 	 /**
 	 * l'action à entreprendre sur les serveurs visités  
@@ -38,10 +36,11 @@ public class Hello extends Agent {
 		private static final long serialVersionUID = 1L;
 
 		public void execute() {
-			System.out.println(as.site()+":  Executing action Hello");
+			listeServeur=listeServeur+"\n"+as.site();
+			logger.log(Level.FINE, this.toString()+" "+as.site()+":  Executing action doIt");
 		}
 		
-		public String toString(){return "Hello";}
+		public String toString(){return "Hello DoIt :";}
 	};
 	/* (non-Javadoc)
 	 * @see jus.aor.mobilagent.kernel.Agent#retour()
@@ -55,11 +54,11 @@ public class Hello extends Agent {
 			private static final long serialVersionUID = 1L;
 
 			public void execute() {
-				
-				System.out.println(as.site() + ":  Executing action HelloRetour");
+				//listeServeur=listeServeur+"\n"+as.site();
+				logger.log(Level.FINE, this.toString()+listeServeur);
 			}
 			
-			public String toString(){return "Action de retour";}
+			public String toString(){return "Hello Retour :";}
 		};
 	}
 	
