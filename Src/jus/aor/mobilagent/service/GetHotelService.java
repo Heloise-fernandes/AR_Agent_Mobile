@@ -1,4 +1,4 @@
-package jus.aor.mobilagent.kernel;
+package jus.aor.mobilagent.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +18,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import jus.aor.mobilagent.hostel.Hotel;
+import jus.aor.mobilagent.kernel._Chaine;
+import jus.aor.mobilagent.kernel._Service;
 
 public class GetHotelService implements _Service<List<Hotel>>, _Chaine{
 
