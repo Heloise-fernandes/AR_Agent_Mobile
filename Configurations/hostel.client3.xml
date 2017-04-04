@@ -6,6 +6,8 @@
 	<agent class="jus.aor.mobilagent.lookforhostel.LookForHotelTime" codebase="bin/HostelTime.jar" args="Paris">
 		<etape server="mobilagent://localhost:2222/" action="findHotel" />
 		<etape server="mobilagent://localhost:3333/" action="findHotel" />
+		<etape server="mobilagent://localhost:5555/" action="findHotel" />
+		<etape server="mobilagent://localhost:6666/" action="findHotel" />
 		<etape server="mobilagent://localhost:4444/" action="findTelephone" />
 	</agent>
 </server>
