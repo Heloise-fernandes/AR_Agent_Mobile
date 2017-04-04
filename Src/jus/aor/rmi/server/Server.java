@@ -2,7 +2,6 @@ package jus.aor.rmi.server;
 
 
 import java.rmi.AlreadyBoundException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -26,12 +25,15 @@ public class Server {
 		try {
 			Registry registre;
 			for (int i = 1; i <= nbChaines; i++) {
+				//Pour chaque chaine d'hotel on créer un registre avec un port donné
 				registre = LocateRegistry.createRegistry(port + i);
-				// Bind de chaine dans registry
-				Chaine c = new Chaine("DataStore/Hotels" + i+ ".xml");
+				//On pars le fichier associer a cette chaine
+				Chaine c = new Chaine("DataStore/Hotels" + i + ".xml");
+				//On classe cette chaine dans le registre 
 				registre.bind("chaine" + i, c);
 			}
 
+			//Le dernier registre contient l'annuaire
 			registre = LocateRegistry.createRegistry(port + nbChaines + 1);
 			Annuaire a = new Annuaire("DataStore/Annuaire.xml");
 			registre.bind("annuaire", a);	
@@ -41,5 +43,6 @@ public class Server {
 			e.printStackTrace();
 
 		}
+		System.out.println("Server ready !");
 	}
 }

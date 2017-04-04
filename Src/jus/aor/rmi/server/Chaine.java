@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,13 +12,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import jus.aor.rmi.common.Hotel;
-import jus.aor.rmi.common.Numero;
 import jus.aor.rmi.common._Chaine;
 
 public class Chaine extends UnicastRemoteObject implements _Chaine {
@@ -27,7 +24,7 @@ public class Chaine extends UnicastRemoteObject implements _Chaine {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8828635014943186320L;
+	private static final long serialVersionUID = 1L;
 	private List<Hotel> ListH = new ArrayList<Hotel>();
 
 	protected Chaine(String fichier)throws RemoteException{
@@ -61,8 +58,6 @@ public class Chaine extends UnicastRemoteObject implements _Chaine {
 	
 	public List<Hotel> get(String localisation) {
 		List<Hotel> finish = new ArrayList<Hotel>();
-		
-		System.out.println("Recuperation hotels");
 		
 		for (Hotel hotel : this.ListH) {
 			if (localisation.equals(hotel.localisation)) {

@@ -10,6 +10,10 @@ import java.io.Serializable;
  * @author Morat 
  */
 public class Hotel implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** la localisation de l'hôtel */
 	public String localisation;
 	/** le nom de l'hôtel */
