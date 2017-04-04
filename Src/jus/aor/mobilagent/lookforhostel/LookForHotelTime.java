@@ -1,19 +1,24 @@
 package jus.aor.mobilagent.lookforhostel;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import jus.aor.mobilagent.hostel.Hotel;
 import jus.aor.mobilagent.kernel.Agent;
+import jus.aor.mobilagent.kernel.AgentServer;
+import jus.aor.mobilagent.kernel.Etape;
 import jus.aor.mobilagent.kernel.Numero;
 import jus.aor.mobilagent.kernel._Action;
 import jus.aor.mobilagent.kernel._Service;
 
-public class LookForHotel extends Agent {
+public class LookForHotelTime extends Agent {
 
 	/**
 	 * 
@@ -23,15 +28,18 @@ public class LookForHotel extends Agent {
 	private ArrayList<Hotel> hotels;
 	private HashMap<Hotel,Numero> numeros;
 	private String localisation;
+	transient private Long timeBegin;
 	 /**
 	  * construction d'un agent de type hello.
 	  * @param args aucun argument n'est requis
 	  */
-	 public LookForHotel(Object... args) {
+	 public LookForHotelTime(Object... args) {
 		super();
 		hotels = new ArrayList<Hotel>();
 		numeros = new HashMap<>();
 		localisation = (String) args[0];
+		timeBegin = System.currentTimeMillis();
+		
 	 }
 	 
 	 /**
@@ -93,13 +101,21 @@ public class LookForHotel extends Agent {
 			private static final long serialVersionUID = 1L;
 
 			public void execute() {
-				logger.log(Level.FINE, this+" Début des résultats "+numeros.size());
+				_Service<?> service = as.getService("Duration");
+				Long finalTime = (Long) service.call();
+				
+				
+				
+				timeBegin = (Long) service.call();
 				for(Hotel hotel : numeros.keySet()) {
 					logger.log(Level.FINE, hotel.name+" : "+numeros.get(hotel).numero);
+					//logger.log(Level.FINE, "Tu m'énerves!");
 					System.out.println(hotel.name+" : "+numeros.get(hotel).numero);
 				}
-				logger.log(Level.FINE, this+" Fin des résultats");
+				logger.log(Level.FINE, "Temps "+(finalTime-timeBegin));
+				System.out.println("Temps "+(finalTime-timeBegin));
 			}
+			
 			public String toString(){return "LookForHotel Retour :";}
 		};
 	}

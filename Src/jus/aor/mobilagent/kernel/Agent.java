@@ -16,7 +16,7 @@ public abstract class Agent implements _Agent {
 	private Route route;
 	transient private String serverName;
 	transient protected Logger logger;
-
+	
 	public void run() {
 		System.out.println("Agent run");
 		if(route.hasNext()){
@@ -51,6 +51,7 @@ public abstract class Agent implements _Agent {
 
 		//Action de départ
 		this.route.add(new Etape(agentServer.site(), _Action.NIHIL));
+		
 	}
 
 	public void reInit(AgentServer server, String serverName) {
