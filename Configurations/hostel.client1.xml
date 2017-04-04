@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC  "-//W3C//DTD HTML 4.0 Transitional//EN" "Server.dtd"> 
 <server>
 	<port value="1111"/>
-	<agent class="jus.aor.mobilagent.hostel.LookForHotel" codebase="file://bin/Hostel.jar" args="Paris">
+	<agent class="jus.aor.mobilagent.lookforhostel.LookForHotel" codebase="bin/Hostel.jar" args="Paris">
 		<etape server="mobilagent://localhost:2222/" action="findHotel" />
 		<etape server="mobilagent://localhost:3333/" action="findHotel" />
 		<etape server="mobilagent://localhost:4444/" action="findTelephone" />

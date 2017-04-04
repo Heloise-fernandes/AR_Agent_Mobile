@@ -137,6 +137,7 @@ public final class Server implements _Server {
 		}catch(Exception ex){
 			//System.out.println(" erreur durant le lancement du serveur"+this);
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
+			ex.printStackTrace();
 			return;
 		}
 	}

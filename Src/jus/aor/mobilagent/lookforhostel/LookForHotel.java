@@ -1,4 +1,4 @@
-package jus.aor.mobileagent.lookforhostel;
+package jus.aor.mobilagent.lookforhostel;
 
 import java.util.ArrayList;
 import java.util.Collection;

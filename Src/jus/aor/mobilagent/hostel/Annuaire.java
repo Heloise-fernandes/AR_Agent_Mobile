@@ -23,7 +23,7 @@ public class Annuaire implements _Service<Numero>, _Annuaire {
 
 	private HashMap<String, Numero> annuaire;
 
-	protected Annuaire(Object ...args) throws ParserConfigurationException, SAXException, IOException{
+	public Annuaire(Object ...args) throws ParserConfigurationException, SAXException, IOException{
 
 		Document doc = null;
 		DocumentBuilder docBuilder;
