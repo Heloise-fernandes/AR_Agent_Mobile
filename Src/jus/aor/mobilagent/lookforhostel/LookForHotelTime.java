@@ -28,7 +28,7 @@ public class LookForHotelTime extends Agent {
 	private ArrayList<Hotel> hotels;
 	private HashMap<Hotel,Numero> numeros;
 	private String localisation;
-	transient private Long timeBegin;
+	private Long timeBegin;
 	 /**
 	  * construction d'un agent de type hello.
 	  * @param args aucun argument n'est requis
@@ -39,6 +39,7 @@ public class LookForHotelTime extends Agent {
 		numeros = new HashMap<>();
 		localisation = (String) args[0];
 		timeBegin = System.currentTimeMillis();
+		System.out.println("time : "+timeBegin);
 		
 	 }
 	 
@@ -103,17 +104,14 @@ public class LookForHotelTime extends Agent {
 			public void execute() {
 				_Service<?> service = as.getService("Duration");
 				Long finalTime = (Long) service.call();
-				
-				
+				Long tps = finalTime-timeBegin;
 				
 				timeBegin = (Long) service.call();
 				for(Hotel hotel : numeros.keySet()) {
 					logger.log(Level.FINE, hotel.name+" : "+numeros.get(hotel).numero);
-					//logger.log(Level.FINE, "Tu m'énerves!");
-					System.out.println(hotel.name+" : "+numeros.get(hotel).numero);
+					//System.out.println(hotel.name+" : "+numeros.get(hotel).numero);
 				}
-				logger.log(Level.FINE, "Temps "+(finalTime-timeBegin));
-				System.out.println("Temps "+(finalTime-timeBegin));
+				logger.log(Level.FINE, "Temps "+(tps));
 			}
 			
 			public String toString(){return "LookForHotel Retour :";}
