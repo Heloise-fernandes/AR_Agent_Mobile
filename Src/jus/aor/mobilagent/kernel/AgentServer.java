@@ -55,7 +55,7 @@ public class AgentServer extends Thread{
 			BAMAgentClassLoader bamLoader = new BAMAgentClassLoader(this.getContextClassLoader());
 			AgentInputStream input = new AgentInputStream(client.getInputStream(), bamLoader);
 			
-			//AgentInputStream lecteurJar = new Agen(client.getInputStream());
+			//AgentInputStream lecteurJar = new Agent(client.getInputStream());
 			Object o = input.readObject();
 			if(o instanceof Jar)
 			{
