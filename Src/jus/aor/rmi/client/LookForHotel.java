@@ -24,8 +24,8 @@ public class LookForHotel{
 	private String localisation;
 	private int port= 1099;
 	private int nbChaines = 4;
-	private Annuaire annuaire;
-	private List<Chaine> chaineList = new ArrayList<Chaine>();
+	private _Annuaire annuaire;
+	private List<_Chaine> chaineList = new ArrayList<_Chaine>();
 	private List<Hotel> hotelList = new ArrayList<Hotel>();
 
 	
@@ -35,18 +35,12 @@ public class LookForHotel{
 	 *          de localisation
 	 */
 	public LookForHotel(String[] args) throws RemoteException, NotBoundException{
-		//1er argument localisation, 2ieme port de base, 3ieme nb de 	chaine
-		
+		//1er argument localisation, 2ieme port de base, 3ieme nb de chaine
+
 		if(args.length == 0){System.out.println("erreur");}		
-		if(args.length == 1){this.localisation = args[0];}
-		if(args.length == 2){
+		if(args.length == 1){
 			this.localisation = args[0];
-			this.port = Integer.parseInt(args[1]);
-		}
-		if(args.length == 3){
-			this.localisation = args[0];
-			this.port = Integer.parseInt(args[1]);
-			this.nbChaines = Integer.parseInt(args[2]);
+			System.out.println("Location : " + localisation);
 		}
 	}
 	/**
@@ -61,14 +55,19 @@ public class LookForHotel{
 		
 		Registry registre;
 		
-		for (int i = 1; i <= this.nbChaines; i++) {
-			registre = LocateRegistry.getRegistry(this.port + i);
-			this.chaineList.add((Chaine) registre.lookup("chaine" + i)); //On recupere toute les chaines d'hotel
-			this.hotelList.addAll((List<Hotel>) ((_Chaine) registre.lookup("chaine" + i)).get(this.localisation));  //Pour chaque chaine d'hotel on recupere les hotels à la localisation 
+		try {
+			for (int i = 1; i <= this.nbChaines; i++) {
+				registre = LocateRegistry.getRegistry(this.port + i);
+				this.chaineList.add((_Chaine) registre.lookup("chaine" + i)); //On recupere toutes les chaines d'hotel
+				//this.hotelList.addAll((List<Hotel>) ((Chaine) registre.lookup("chaine" + i)).get(this.localisation));  //Pour chaque chaine d'hotel on recupere les hotels à la localisation 
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
 		}
 		
 		registre = LocateRegistry.getRegistry(this.port + (this.nbChaines+1));
-		this.annuaire = (Annuaire) registre.lookup("annuaire");
+		this.annuaire = (_Annuaire) registre.lookup("annuaire");
 
 		return  (System.currentTimeMillis() - tps);
 	}

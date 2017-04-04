@@ -22,7 +22,7 @@ import jus.aor.rmi.common.Hotel;
 import jus.aor.rmi.common.Numero;
 import jus.aor.rmi.common._Chaine;
 
-public class Chaine extends UnicastRemoteObject  implements _Chaine {
+public class Chaine extends UnicastRemoteObject implements _Chaine {
 	
 	/**
 	 * 

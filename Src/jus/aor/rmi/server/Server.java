@@ -30,7 +30,6 @@ public class Server {
 				// Bind de chaine dans registry
 				Chaine c = new Chaine("DataStore/Hotels" + i+ ".xml");
 				registre.bind("chaine" + i, c);
-				System.out.println("Chemin " + i + " bind avec succès.");
 			}
 
 			registre = LocateRegistry.createRegistry(port + nbChaines + 1);
