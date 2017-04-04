@@ -33,13 +33,15 @@ public class Annuaire extends UnicastRemoteObject implements _Annuaire {
 		    final DocumentBuilder builder = factory.newDocumentBuilder();       
 		    final Document document= builder.parse(new File( fichier ));
 			
-		    final NodeList elements = document.getElementsByTagName("Téléphone"); // on se met a la racine "root"
+		    final NodeList elements = document.getElementsByTagName("Telephone"); // on se met a la racine "root"
 
 			
 			for (int i = 0; i<elements.getLength(); i++) { // on boucle sur tous les enfants et on remplis la hashmap
 				Node item = elements.item(i);
-			    String name = item.getAttributes().getNamedItem("name").getNodeName();
-			    Numero num = new Numero(item.getAttributes().getNamedItem("name").getNodeName());
+			    String name = item.getAttributes().getNamedItem("name").getNodeValue();
+			    Numero num = new Numero(item.getAttributes().getNamedItem("numero").getNodeValue());
+			    
+			    System.out.println(name+ num);
 				this.annuaire.put(name, num);
 			
 			}

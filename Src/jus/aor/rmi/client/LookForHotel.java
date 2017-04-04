@@ -24,7 +24,7 @@ public class LookForHotel{
 	private String localisation;
 	private int port= 1099;
 	private int nbChaines = 4;
-	private _Annuaire annuaire;
+	private Annuaire annuaire;
 	private List<_Chaine> chaineList = new ArrayList<_Chaine>();
 	private List<Hotel> hotelList = new ArrayList<Hotel>();
 
@@ -73,7 +73,8 @@ public class LookForHotel{
 		
 				
 		registre = LocateRegistry.getRegistry(this.port + (this.nbChaines+1));
-		this.annuaire = (_Annuaire) registre.lookup("annuaire");
+		this.annuaire = (Annuaire) registre.lookup("annuaire");
+
 
 		return  (System.currentTimeMillis() - tps);
 	}
