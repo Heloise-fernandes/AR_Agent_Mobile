@@ -2,7 +2,10 @@ package jus.aor.mobileagent.lookforhostel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.TreeMap;
 import java.util.logging.Level;
+
+import org.w3c.dom.Node;
 
 import jus.aor.mobilagent.hostel.Hotel;
 import jus.aor.mobilagent.kernel.Agent;
@@ -17,7 +20,7 @@ public class LookForHotel extends Agent {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Hotel> hotels;
-	private ArrayList<Numero> numeros;
+	private TreeMap<Hotel,Numero> numeros;
 	private String localisation;
 	 /**
 	  * construction d'un agent de type hello.
@@ -26,14 +29,14 @@ public class LookForHotel extends Agent {
 	 public LookForHotel(Object... args) {
 		super();
 		hotels = new ArrayList<Hotel>();
-		numeros = new ArrayList<Numero>();
+		numeros = new TreeMap<>();
 		localisation = (String) args[0];
 	 }
 	 
 	 /**
 	 * l'action à entreprendre sur les serveurs visités  
 	 */
-	protected _Action getHotel = new _Action(){
+	protected _Action findHotel = new _Action(){
 
 		/**
 		 * 
@@ -53,7 +56,7 @@ public class LookForHotel extends Agent {
 	 /**
 	 * l'action à entreprendre sur le serveur annuaire 
 	 */
-	protected _Action getNumero = new _Action(){
+	protected _Action findTelephone = new _Action(){
 
 		/**
 		 * 
@@ -61,8 +64,12 @@ public class LookForHotel extends Agent {
 		private static final long serialVersionUID = 1L;
 
 		public void execute() {
+			_Service<?> service = as.getService("Annuaire");
 			
-			numeros.addAll();
+			for(Hotel hotel : hotels) {
+				numeros.put(hotel,(Numero) service.call(hotel));
+			}		
+			
 			logger.log(Level.FINE,this+" récupération des numéros " + localisation+" sur le serveur "+as);
 		}
 		
@@ -81,8 +88,9 @@ public class LookForHotel extends Agent {
 			private static final long serialVersionUID = 1L;
 
 			public void execute() {
-				//listeServeur=listeServeur+"\n"+as.site();
-				logger.log(Level.FINE, this.toString()+listeServeur);
+				for(Hotel hotel : numeros.keySet()) {
+					logger.log(Level.FINE, hotel+" : "+numeros.get(hotel));
+				}
 			}
 			
 			public String toString(){return "Hello Retour :";}
