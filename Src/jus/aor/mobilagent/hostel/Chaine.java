@@ -3,7 +3,6 @@ package jus.aor.mobilagent.hostel;
 import java.util.List;
 
 import jus.aor.mobilagent.kernel.Agent;
-import jus.aor.mobilagent.kernel.Hotel;
 import jus.aor.mobilagent.kernel._Action;
 import jus.aor.mobilagent.kernel._Chaine;
 

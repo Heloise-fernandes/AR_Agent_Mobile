@@ -5,6 +5,8 @@ package jus.aor.mobilagent.kernel;
 
 import java.util.List;
 
+import jus.aor.mobilagent.hostel.Hotel;
+
 /**
  * Définit une chaine d'hôtels et une fonctionnalité permettant d'obtenir l'ensemble des hotels de cette chaine
  * pour une localisation donnée.

@@ -1,4 +1,4 @@
-package jus.aor.mobilagent.kernel;
+package jus.aor.mobilagent.hostel;
 /**
  * J<i>ava</i> U<i>tilities</i> for S<i>tudents</i>
  */
