@@ -2,10 +2,9 @@ package jus.aor.mobilagent.lookforhostel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.logging.Level;
-
-import org.w3c.dom.Node;
 
 import jus.aor.mobilagent.hostel.Hotel;
 import jus.aor.mobilagent.kernel.Agent;
@@ -19,6 +18,7 @@ public class LookForHotel extends Agent {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	//private Collection<Hotel> hotels = new LinkedList<Hotel>();
 	private ArrayList<Hotel> hotels;
 	private TreeMap<Hotel,Numero> numeros;
 	private String localisation;
@@ -47,7 +47,7 @@ public class LookForHotel extends Agent {
 		public void execute() {
 			_Service<?> service = as.getService("Hotels");
 			hotels.addAll((Collection<? extends Hotel>) service.call(localisation));
-			logger.log(Level.FINE,this+" ajout d'une liste d'hotels appartenant à la localisation " + localisation+" sur le serveur "+as);
+			logger.log(Level.FINE,this+" ajout d'une liste d'hotels appartenant à la localisation " + localisation+" sur le serveur "+as+" taille hotel : "+hotels.size());
 		}
 		
 		public String toString(){return "LookForHotel getHotel:";}
@@ -68,7 +68,7 @@ public class LookForHotel extends Agent {
 			
 			for(Hotel hotel : hotels) {
 				numeros.put(hotel,(Numero) service.call(hotel));
-			}		
+			}
 			
 			logger.log(Level.FINE,this+" récupération des numéros " + localisation+" sur le serveur "+as);
 		}
@@ -88,12 +88,14 @@ public class LookForHotel extends Agent {
 			private static final long serialVersionUID = 1L;
 
 			public void execute() {
+				logger.log(Level.FINE, this+" Début des résultats "+numeros.size());
 				for(Hotel hotel : numeros.keySet()) {
 					logger.log(Level.FINE, hotel+" : "+numeros.get(hotel));
 				}
+				logger.log(Level.FINE, this+" Fin des résultats");
 			}
 			
-			public String toString(){return "Hello Retour :";}
+			public String toString(){return "LookForHotel Retour :";}
 		};
 	}
 
