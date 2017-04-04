@@ -21,7 +21,10 @@ public class Server {
 				System.exit(1);
 			}
 		}
-		System.setSecurityManager(new SecurityManager());
+		if (System.getSecurityManager() == null) {
+			System.setSecurityManager(new SecurityManager());
+		}
+		
 		try {
 			Registry registre;
 			for (int i = 1; i <= nbChaines; i++) {
