@@ -2,6 +2,8 @@ package jus.aor.rmi.server;
 
 import java.io.File;
 import java.io.IOException;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,40 +18,32 @@ import org.xml.sax.SAXException;
 
 import jus.aor.rmi.common.*;
 
-public class Annuaire implements _Annuaire{
+public class Annuaire extends UnicastRemoteObject implements _Annuaire {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8828635014943186320L;
 	private HashMap<String, Numero> annuaire = new HashMap<String, Numero>();
-	
-	private Annuaire(String fichier){
+
+	protected Annuaire(String fichier) throws ParserConfigurationException, SAXException, IOException{
 		
 		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		try {
 		    final DocumentBuilder builder = factory.newDocumentBuilder();       
 		    final Document document= builder.parse(new File( fichier ));
 			
-		    final Element racine = document.getDocumentElement(); // on se met a la racine "root"
-			final NodeList racineNoeuds = racine.getChildNodes(); //on se met sur un enfant "Téléphone"
-			final int nbRacineNoeuds = racineNoeuds.getLength(); // On recupere le nombre d'enfant 
+		    final NodeList elements = document.getElementsByTagName("Téléphone"); // on se met a la racine "root"
+
 			
-			for (int i = 0; i<nbRacineNoeuds; i++) { // on boucle sur tous les enfants et on remplis la hashmap
-				Node item = racineNoeuds.item(i);
+			for (int i = 0; i<elements.getLength(); i++) { // on boucle sur tous les enfants et on remplis la hashmap
+				Node item = elements.item(i);
 			    String name = item.getAttributes().getNamedItem("name").getNodeName();
 			    Numero num = new Numero(item.getAttributes().getNamedItem("name").getNodeName());
 				this.annuaire.put(name, num);
+			
 			}
 
-
-		}
-		catch (final ParserConfigurationException e) {
-		    e.printStackTrace();
-		}
-		catch (final SAXException e) {
-		    e.printStackTrace();
-		}
-		catch (final IOException e) {
-		    e.printStackTrace();
-		}
 		
 		
 	}

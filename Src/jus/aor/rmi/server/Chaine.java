@@ -2,6 +2,8 @@ package jus.aor.rmi.server;
 
 import java.io.File;
 import java.io.IOException;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,22 +22,24 @@ import jus.aor.rmi.common.Hotel;
 import jus.aor.rmi.common.Numero;
 import jus.aor.rmi.common._Chaine;
 
-public class Chaine implements _Chaine {
+public class Chaine extends UnicastRemoteObject  implements _Chaine {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8828635014943186320L;
 	private List<Hotel> ListH = new ArrayList<Hotel>();
 
-	public Chaine(String fichier){
+	protected Chaine(String fichier)throws RemoteException{
 		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
 		    final DocumentBuilder builder = factory.newDocumentBuilder();       
 		    final Document document= builder.parse(new File( fichier ));
 			
-		    final Element racine = document.getDocumentElement(); // on se met a la racine "root"
-			final NodeList racineNoeuds = racine.getChildNodes(); //on se met sur un enfant "Hotel"
-			final int nbRacineNoeuds = racineNoeuds.getLength(); // On recupere le nombre d'enfant 
+		    final NodeList elements = document.getElementsByTagName("Hotel"); // Recupere la lise de tous les hotels 
 			
-			for (int i = 0; i<nbRacineNoeuds; i++) { // on boucle sur tous les enfants et on remplis la hashmap
-				Node item = racineNoeuds.item(i);
+			for (int i = 0; i< elements.getLength(); i++) { // on boucle sur la liste des hotels et on remplis la hashmap
+				Node item = elements.item(i);
 			    String name = item.getAttributes().getNamedItem("name").getNodeValue();
 			    String loca = item.getAttributes().getNamedItem("localisation").getNodeValue();
 				this.ListH.add(new Hotel(name, loca));
@@ -63,6 +67,8 @@ public class Chaine implements _Chaine {
 				finish.add(hotel);
 			}		
 		}
+
+		
 		return finish;
 	}
 
