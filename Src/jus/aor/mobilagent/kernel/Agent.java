@@ -54,6 +54,7 @@ public abstract class Agent implements _Agent {
 
 		//Action de départ
 		this.route.add(new Etape(agentServer.site(), _Action.NIHIL));
+		
 	}
 
 	public void reInit(AgentServer server, String serverName) {
