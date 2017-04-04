@@ -2,7 +2,9 @@ package jus.aor.mobilagent.hostel;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,8 +17,9 @@ import org.xml.sax.SAXException;
 
 import jus.aor.mobilagent.kernel.Numero;
 import jus.aor.mobilagent.kernel._Annuaire;
+import jus.aor.mobilagent.kernel._Service;
 
-public class Annuaire implements _Annuaire {
+public class Annuaire implements _Service<Numero>, _Annuaire {
 
 	private HashMap<String, Numero> annuaire;
 
@@ -49,6 +52,13 @@ public class Annuaire implements _Annuaire {
 	@Override
 	public Numero get(String abonne) {
 		return this.annuaire.get(abonne);
+	}
+
+	@Override
+	public Numero call(Object... params) throws IllegalArgumentException {
+		Numero num = get((String) params[0]);
+		
+		return num;
 	}
 
 }
