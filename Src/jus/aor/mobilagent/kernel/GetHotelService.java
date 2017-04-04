@@ -23,13 +23,13 @@ public class GetHotelService implements _Service<List<Hotel>>, _Chaine{
 
 	private ArrayList<Hotel> listeHotel;
 	
-	public GetHotelService(String path) {
+	public GetHotelService(Object... args) {
 		Document doc = null;
 		DocumentBuilder docBuilder;
 		try 
 		{
 			docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			doc = docBuilder.parse(new File(path));
+			doc = docBuilder.parse(new File((String) args[0]));
 		} catch (ParserConfigurationException | SAXException | IOException e) {e.printStackTrace();}
 		
 		this.listeHotel = new ArrayList<>();
@@ -37,7 +37,6 @@ public class GetHotelService implements _Service<List<Hotel>>, _Chaine{
 		if(doc!=null)
 		{
 			NamedNodeMap attrs;
-			Object[] args;
 			String localisation, name;
 			for(Node item : iterable(doc,"Hotel")) {
 				attrs = item.getAttributes();

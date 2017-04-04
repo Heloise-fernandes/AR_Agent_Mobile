@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 /**
  * Classe en cours de construction #TODO
  * @author cheva
@@ -25,6 +26,7 @@ public class AgentServer extends Thread{
 	public AgentServer(int port, String name ){
 		this.port = port;
 		this.name = name;
+		this.listeService = new TreeMap<String, _Service>();
 	}
 	
 	public void run(){

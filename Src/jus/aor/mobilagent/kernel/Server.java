@@ -75,8 +75,7 @@ public final class Server implements _Server {
 	public final void addService(String name, String classeName, String codeBase, Object... args) {
 		try {
 			
-			BAMServerClassLoader sLoader = new BAMServerClassLoader( new URL[] {}, this.getClass().getClassLoader());
-			sLoader.addURL(new URL(codeBase));
+			BAMServerClassLoader sLoader = new BAMServerClassLoader( new URL[] {new URL(codeBase)}, this.getClass().getClassLoader());
 			
 			Class<?> sclasse = Class.forName(classeName,true,sLoader);
 			
@@ -89,6 +88,7 @@ public final class Server implements _Server {
 		}catch(Exception ex){
 			System.out.println(" erreur durant le lancement du serveur"+this);
 			logger.log(Level.FINE," erreur durant le lancement du serveur"+this,ex);
+			ex.printStackTrace();
 			return;
 		}
 	}
