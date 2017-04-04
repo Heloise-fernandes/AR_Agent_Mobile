@@ -95,7 +95,9 @@ public class LookForHotel extends Agent {
 			public void execute() {
 				logger.log(Level.FINE, this+" Début des résultats "+numeros.size());
 				for(Hotel hotel : numeros.keySet()) {
-					logger.log(Level.FINE, hotel+" : "+numeros.get(hotel));
+					//logger.log(Level.FINE, hotel.name+" : "+numeros.get(hotel).numero);
+					logger.log(Level.FINE, "Tu m'énerves!");
+					System.out.println(hotel.name+" : "+numeros.get(hotel).numero);
 				}
 				logger.log(Level.FINE, this+" Fin des résultats");
 			}
