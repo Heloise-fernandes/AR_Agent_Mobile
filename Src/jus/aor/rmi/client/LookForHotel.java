@@ -59,13 +59,19 @@ public class LookForHotel{
 			for (int i = 1; i <= this.nbChaines; i++) {
 				registre = LocateRegistry.getRegistry(this.port + i);
 				this.chaineList.add((_Chaine) registre.lookup("chaine" + i)); //On recupere toutes les chaines d'hotel
-				//this.hotelList.addAll((List<Hotel>) ((Chaine) registre.lookup("chaine" + i)).get(this.localisation));  //Pour chaque chaine d'hotel on recupere les hotels à la localisation 
+				this.hotelList.addAll((List<Hotel>) ((_Chaine) registre.lookup("chaine" + i)).get(this.localisation));
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		
+		System.out.println("Hotels :");
+		for(Hotel h : hotelList) {
+			System.out.println(h.toString());
+		}
+		
+				
 		registre = LocateRegistry.getRegistry(this.port + (this.nbChaines+1));
 		this.annuaire = (_Annuaire) registre.lookup("annuaire");
 
